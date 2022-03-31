@@ -1,4 +1,4 @@
-package com.deeplearning.aitrash.dto;
+package com.example.aitrash_jar.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +10,6 @@ import java.net.URLEncoder;
 @Data
 @AllArgsConstructor
 public class UploadResultDTO implements Serializable {
-
     private String fileName;
     private String uuid;
     private String folderPath;
@@ -23,4 +22,5 @@ public class UploadResultDTO implements Serializable {
         }
         return "";
     }
+
 }

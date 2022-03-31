@@ -1,13 +1,13 @@
-package com.deeplearning.aitrash;
+package com.example.aitrash_jar;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AiTrashApplication {
+public class AiTrashJarApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AiTrashApplication.class, args);
+        SpringApplication.run(AiTrashJarApplication.class, args);
     }
 
 }

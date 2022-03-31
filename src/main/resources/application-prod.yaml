@@ -2,7 +2,6 @@ server:
   port : 5000
 spring:
   jpa:
-    database: mariadb
     show-sql: true
     database-platform: org.hibernate.dialect.MariaDB103Dialect
     hibernate:
@@ -10,4 +9,4 @@ spring:
   datasource:
     url: jdbc:jdbc:mariadb://${rds.hostname}:${rds.port}/${rds.db.name}
     username: ${rds.username}
-    password: ${rds.password};
+    password: ${rds.password}

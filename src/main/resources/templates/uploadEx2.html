@@ -35,6 +35,7 @@
                 <div class="input-group">
                     <input type="file" class="form-control" aria-label="Upload">
                     <button class="uploadBtn btn bg-info text-light" type="button" id="inputGroupFileAddon04">Upload</button>
+                    <button class="resetBtn btn bg-danger text-light" type="button" id="inputGroupFileAddon04">Reset</button>
                   </div>
             </div>
         </div>
@@ -89,11 +90,11 @@
                     <div class="card-body">
                         <div class='container'>
                             <div class='row align-items-center'>
-                                <div class='col-3'>
+                                <div class='col-3 col-lg-4'>
                                     <img class='rounded mx-auto d-block' src="src/glass.png" style = "width:40px">
                                     <p class='card-text text-center text-primary'>Glass</p>
                                 </div>
-                                <div class='col-9 align-middle'>
+                                <div class='col-9 col-lg-8 align-middle'>
                                     <h4 id='glass_data' class='text-end text-primary'></h4>
                                 </div>
                                 <div class="progress">
@@ -104,20 +105,34 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="container-fluid d-flex justify-content-end mt-3">
-                    <button type="button" class="btn btn-info me-2">Predict</button>
-                    <button type="button" class="btn btn-danger">reset</button>
-                </div>
-
-
             </div>
         </div>
     </div>
 
     <script>
+        $('.resetBtn').click(function( ) {
+            var inputFile = $("input[type='file']");
+            inputFile.val("");
+
+            $("#ItemPreview").attr('src', "");
+            $("#can_data").text("");
+            $("#plastic_data").text("");
+            $("#glass_data").text("");
+
+            $("#can_progress").attr('style', "width: " + "0%");
+            $("#plastic_progress").attr('style', "width: " + "0%");
+            $("#glass_progress").attr('style', "width: " + "0%");
+        });
 
         $('.uploadBtn').click(function( ) {
+            $("#ItemPreview").attr('src', "");
+            $("#can_data").text("");
+            $("#plastic_data").text("");
+            $("#glass_data").text("");
+
+            $("#can_progress").attr('style', "width: " + "0%");
+            $("#plastic_progress").attr('style', "width: " + "0%");
+            $("#glass_progress").attr('style', "width: " + "0%");
 
             var formData = new FormData();
 
@@ -150,7 +165,6 @@
         }); //end click
         //
         function showUploadedImages(arr){
-            debugger
             console.log(arr);
 
             $.ajax({
@@ -162,15 +176,15 @@
                 dataType: 'json',
                 success: function (result) {
                     debugger
-                    console.log(result)
-                    $("#ItemPreview").attr('src', "data:" + result.contentType + `;base64,${result.imageSource}`);
-                    $("#can_data").text(Math.round(result.percentCan*100)+"%")
-                    $("#plastic_data").text(Math.round(result.percentPlastic*100)+"%")
-                    $("#glass_data").text(Math.round(result.percentGlass*100)+"%")
+                    console.log(result);
+                    $("#ItemPreview").attr('src', "data:" + result.contentType + `;base64,${result.imageSource}`);;
+                    $("#can_data").text(Math.round(result.percentCan*100)+"%");
+                    $("#plastic_data").text(Math.round(result.percentPlastic*100)+"%");
+                    $("#glass_data").text(Math.round(result.percentGlass*100)+"%");
 
-                    $("#can_progress").attr('style', "width: " + Math.round(result.percentCan*100) + "%")
-                    $("#plastic_progress").attr('style', "width: " + Math.round(result.percentPlastic*100) + "%")
-                    $("#glass_progress").attr('style', "width: " + Math.round(result.percentGlass*100) + "%")
+                    $("#can_progress").attr('style', "width: " + Math.round(result.percentCan*100) + "%");
+                    $("#plastic_progress").attr('style', "width: " + Math.round(result.percentPlastic*100) + "%");
+                    $("#glass_progress").attr('style', "width: " + Math.round(result.percentGlass*100) + "%");
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(textStatus);

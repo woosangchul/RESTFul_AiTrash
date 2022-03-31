@@ -1,8 +1,7 @@
-package com.deeplearning.aitrash.controller;
+package com.example.aitrash_jar.controller;
 
-import com.deeplearning.aitrash.dto.UploadImageDTO;
-import com.deeplearning.aitrash.dto.UploadResultDTO;
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.example.aitrash_jar.dto.UploadImageDTO;
+import com.example.aitrash_jar.dto.UploadResultDTO;
 import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -158,7 +157,7 @@ public class UploadController {
         data.put("instances", itemList);
 
         try {
-            URL url = new URL("http://192.168.2.106:8501/v1/models/inceptionV4:predict");
+            URL url = new URL("http://3.34.40.201:8501/v1/models/inceptionV4:predict");
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 
             conn.setRequestMethod("POST"); // http 메서드
@@ -181,7 +180,6 @@ public class UploadController {
                 sb.append(line);
             }
 
-            System.out.println(sb.toString());
             JSONParser parser = new JSONParser();
             jsonObject = (JSONObject)parser.parse(sb.toString());
 
