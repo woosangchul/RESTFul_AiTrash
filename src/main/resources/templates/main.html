@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script
+    src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+    crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+        <img src="src/trash-can.png" alt="Logo" style="width:40px;" class="rounded-pill">
+        인공지능 쓰레기통
+        </a>
+    </div>
+    </nav>
+
+
+    <div class="container mt-3">
+    <h3>프로젝트 소개</h3>
+    <p>분리수거율을 높이기 위해 인공지능 쓰레기통은 사용자의 쓰레기를 인식하여 알맞은 쓰레기통 입구를 열어주어 사용자의 분리수거를 높인다.</p>
+    <p></p>
+    </div>
+
+    <div class="container">
+        <div class='row'>
+            <div class='col-lg-8'>
+                <div class="input-group">
+                    <input type="file" class="form-control" aria-label="Upload">
+                    <button class="uploadBtn btn bg-info text-light" type="button" id="inputGroupFileAddon04">Upload</button>
+                    <button class="resetBtn btn bg-danger text-light" type="button" id="inputGroupFileAddon04">Reset</button>
+                  </div>
+            </div>
+        </div>
+        
+        <div class='row align-items-center'>
+            <div class='col-lg-8 bg-light uploadResult' style = 'height:30vw'>
+                <img id='ItemPreview' class='d-block mx-auto mt-3' src="" style='height: 90%; object-fit: cover;'>
+            </div>
+            <div class='col-lg-4'>
+                <div class="card d-flex">
+                    <div class="card-body">
+                        <div class='container'>
+                            <div class='row align-items-center'>
+                                <div class='col-3 col-lg-4'>
+                                    <img class='rounded mx-auto d-block' src="src/can.png" style = "width:40px">
+                                    <p class='card-text text-center text-danger'>Can</p>
+                                </div>
+                                <div class='col-9 col-lg-8 align-middle'>
+                                    <h4 id='can_data' class='text-end text-danger'></h4>
+                                </div>
+                                <div class="progress">
+                                    <div id='can_progress' class="progress-bar progress-bar-striped bg-danger progress-bar-animated" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                </div>     
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card d-flex">
+                    <div class="card-body">
+                        <div class='container'>
+                            <div class='row align-items-center'>
+                                <div class='col-3 col-lg-4'>
+                                    <img class='rounded mx-auto d-block' src="src/plastic.png" style = "width:40px">
+                                    <p class='card-text text-center'>Plastic</p>
+                                </div>
+                                <div class='col-9 col-lg-8 align-middle'>
+                                    <h4 id='plastic_data' class='text-end'></h4>
+                                </div>
+                                <div class="progress">
+                                    <div id='plastic_progress' class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                </div>     
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card d-flex">
+                    <div class="card-body">
+                        <div class='container'>
+                            <div class='row align-items-center'>
+                                <div class='col-3 col-lg-4'>
+                                    <img class='rounded mx-auto d-block' src="src/glass.png" style = "width:40px">
+                                    <p class='card-text text-center text-primary'>Glass</p>
+                                </div>
+                                <div class='col-9 col-lg-8 align-middle'>
+                                    <h4 id='glass_data' class='text-end text-primary'></h4>
+                                </div>
+                                <div class="progress">
+                                    <div id='glass_progress' class="progress-bar progress-bar-striped bg-primary progress-bar-animated" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                </div>     
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('.resetBtn').click(function( ) {
+            var inputFile = $("input[type='file']");
+            inputFile.val("");
+
+            $("#ItemPreview").attr('src', "");
+            $("#can_data").text("");
+            $("#plastic_data").text("");
+            $("#glass_data").text("");
+
+            $("#can_progress").attr('style', "width: " + "0%");
+            $("#plastic_progress").attr('style', "width: " + "0%");
+            $("#glass_progress").attr('style', "width: " + "0%");
+        });
+
+        $('.uploadBtn').click(function( ) {
+            $("#ItemPreview").attr('src', "");
+            $("#can_data").text("");
+            $("#plastic_data").text("");
+            $("#glass_data").text("");
+
+            $("#can_progress").attr('style', "width: " + "0%");
+            $("#plastic_progress").attr('style', "width: " + "0%");
+            $("#glass_progress").attr('style', "width: " + "0%");
+
+            var formData = new FormData();
+
+            var inputFile = $("input[type='file']");
+
+            var files = inputFile[0].files;
+
+            for (var i = 0; i < files.length; i++) {
+                console.log(files[i]);
+                formData.append("uploadFiles", files[i]);
+            }
+
+            //실제 업로드 부분
+            //upload ajax
+            $.ajax({
+                url: '/uploadAjax',
+                processData: false,
+                contentType: false,
+                data: formData,
+                type: 'POST',
+                dataType:'json',
+                success: function(result){
+                    showUploadedImages(result);
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    console.log(textStatus);
+                }
+
+            }); //$.ajax
+        }); //end click
+        //
+        function showUploadedImages(arr){
+            console.log(arr);
+
+            $.ajax({
+                url: '/display1?fileName=' + arr[0].imageURL,
+                processData: false,
+                contentType: false,
+//            data: {"fileName": arr[0].imageURL},
+                type: 'GET',
+                dataType: 'json',
+                success: function (result) {
+                    debugger
+                    console.log(result);
+                    $("#ItemPreview").attr('src', "data:" + result.contentType + `;base64,${result.imageSource}`);;
+                    $("#can_data").text(Math.round(result.percentCan*100)+"%");
+                    $("#plastic_data").text(Math.round(result.percentPlastic*100)+"%");
+                    $("#glass_data").text(Math.round(result.percentGlass*100)+"%");
+
+                    $("#can_progress").attr('style', "width: " + Math.round(result.percentCan*100) + "%");
+                    $("#plastic_progress").attr('style', "width: " + Math.round(result.percentPlastic*100) + "%");
+                    $("#glass_progress").attr('style', "width: " + Math.round(result.percentGlass*100) + "%");
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus);
+                }
+            });
+        }
+        function showUploadedImages1(arr){
+
+            console.log(arr);
+
+            var divArea = $(".uploadResult");
+
+            for(var i = 0; i < arr.length; i++){
+                divArea.append("<img class=\"d-block mx-auto\" src='/display?fileName="+arr[i].imageURL+"' style='height:30vw'>");
+            }
+
+
+        }
+        //
+        // $(".uploadResult").on("click", ".removeBtn", function(e){
+        //
+        //     var target = $(this);
+        //     var fileName = target.data("name");
+        //     var targetDiv = $(this).closest("div");
+        //
+        //     console.log(fileName);
+        //
+        //     $.post('/removeFile', {fileName: fileName}, function(result){
+        //         console.log(result);
+        //         if(result === true){
+        //             targetDiv.remove();
+        //         }
+        //     } )
+        //
+        // });
+
+
+
+    </script>
+
+</body>
+</html>
+
+

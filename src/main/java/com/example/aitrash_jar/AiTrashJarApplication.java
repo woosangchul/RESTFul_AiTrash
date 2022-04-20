@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class AiTrashJarApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(AiTrashJarApplication.class, args);
+    public static void main(String[] args) { SpringApplication.run(AiTrashJarApplication.class, args);
     }
 
 }

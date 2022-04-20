@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class UloadTestController {
-    @GetMapping("/uploadEx2")
+    @GetMapping("/main")
     public void uploadEx(){
 
 

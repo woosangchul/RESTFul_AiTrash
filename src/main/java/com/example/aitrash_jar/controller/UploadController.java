@@ -36,8 +36,12 @@ public class UploadController {
     @Value("${com.deeplearning.upload.path}")
     private String uploadPath;
 
+    @Value("${serverIP}")
+    private String serverIP;
+
     @PostMapping("/uploadAjax")
     public ResponseEntity<List<UploadResultDTO>> uploadFile(MultipartFile[] uploadFiles){
+        log.info("serverIP: "+ serverIP);
         List<UploadResultDTO> resultDTOList = new ArrayList<>();
 
         for (MultipartFile uploadFile: uploadFiles){
@@ -157,7 +161,7 @@ public class UploadController {
         data.put("instances", itemList);
 
         try {
-            URL url = new URL("http://3.34.40.201:8501/v1/models/inceptionV4:predict");
+            URL url = new URL("http://"+serverIP+":8501/v1/models/inceptionV4:predict");
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 
             conn.setRequestMethod("POST"); // http 메서드
